@@ -1,3 +1,5 @@
+<?php require_once("connection.php")?>
+
 <!DOCTYPE html>
 
 <html>
@@ -85,9 +87,22 @@
                                 <select class="form-control" id="gender">
 
                                     
+<?php 
 
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
+$rs = Database::search("SELECT * FROM `gender`");
+$num = $rs->num_rows;
+
+for($x = 0;$x < $num;$x++):
+$data = $rs->fetch_assoc();
+?>
+<option value="<?= $data["gender_id"]?>">
+<?= $data["gender_name"]?>
+</option>
+
+<?php
+endfor;
+
+?>
 
                                     
                                 </select>
@@ -98,7 +113,7 @@
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-dark">Already have an account? Sign In</button>
+                                <button class="btn btn-dark" onclick="changeView();">Already have an account? Sign In</button>
                             </div>
 
                         </div>
@@ -135,7 +150,7 @@
                                 <button class="btn btn-primary">Sign In</button>
                             </div>
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-danger">New to eShop? Join Now</button>
+                                <button class="btn btn-danger" onclick="changeView();">New to eShop? Join Now</button>
                             </div>
                         </div>
                     </div>
@@ -149,7 +164,7 @@
 
             <!-- footer -->
             <div class="col-12 fixed-bottom d-none d-lg-block">
-                <p class="text-center">&copy; 2022 eShop.lk || All Rights Reserved</p>
+                <p class="text-center">&copy; <?= date("Y")?> eShop.lk || All Rights Reserved</p>
             </div>
             <!-- footer -->
 

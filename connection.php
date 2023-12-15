@@ -9,13 +9,13 @@ Database::$connection = new mysqli("localhost","root","Abcd!234","eshop","3306")
         }
     }
     
-    public static function iud($q){
+    public static function iud($query){
 Database::setUpConnection();
-Database::$connection->query($q);
+Database::$connection->query($query);
     }
-    public static function search($q){
+    public static function search($query){
 Database::setUpConnection();
-$resultset= Database::$connection->query($q);
+$resultset= Database::$connection->query($query);
 return $resultset;  
     }
 }
