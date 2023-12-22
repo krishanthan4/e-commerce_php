@@ -30,10 +30,9 @@ function signUp() {
         document.getElementById("msg").textContent = "Registration Successful";
         document.getElementById("msg").className = "alert alert-success";
         document.getElementById("msgdiv").className = "d-block";
-      }else {
+      } else {
         document.getElementById("msg").className = "d-block";
         document.getElementById("msgdiv").textContent = respose;
-
       }
     }
   };
@@ -42,42 +41,46 @@ function signUp() {
   request.send(form);
 }
 
+function signin() {
+  var email = document.getElementById("email2");
+  var password = document.getElementById("password");
+  var remember_me = document.getElementById("remember_me");
 
-function signin(){
-    var email = document.getElementById("email2");
-    var password = document.getElementById("password");
-    var remember_me = document.getElementById("remember_me");
+  var form = new FormData();
+  form.append("email", email.value);
+  form.append("password", password.value);
+  form.append("remember_me", remember_me.checked);
 
-var form = new FormData();
-form.append("email",email.value);
-form.append("password",password.value);
-form.append("remember_me",remember_me.checked);
+  var request = new XMLHttpRequest();
 
-var request = new XMLHttpRequest();
-
-request.onreadystatechange = function(){
-    if(request.status ==200 & request.readyState==4){
-
-        var respose = request.responseText;
-if(respsose == "success"){
-
-}
-
+  request.onreadystatechange = function () {
+    if ((request.status == 200) & (request.readyState == 4)) {
+      var respose = request.responseText;
+      if (respsose == "success") {
+      }
     }
-}
+  };
 
-request.open("POST","signInProcess.php",true);
-request.send(form);
-
+  request.open("POST", "signInProcess.php", true);
+  request.send(form);
 }
 
 // forgot password start
 var forgotPasswordModal;
-function forgotPassword(){
+function forgotPassword() {
+  //   var modal = document.getElementById("fpmodal");
+  //   forgotPasswordModal = new bootstrap.Modal(modal);
+  // forgotPasswordModal.show();
 
-  var modal = document.getElementById("fpmodal");
-  forgotPasswordModal = new bootstrap.Modal(modal);
-forgotPasswordModal.show();
+  var email = document.getElementById("email2");
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.status == 200 && request.readyState == 4) {
+      var text = request.responseText;
+      alert(text);
+    }
+  };
 
-
+  request.open("GET", "forgotPasswordProcess.php?3=" + email.value, true);
+  request.send();
 }

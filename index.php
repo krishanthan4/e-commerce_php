@@ -199,38 +199,48 @@ if(isset($_COOKIE["password"])){
 <div class="row g-3">
 
 <div class="col-6">
-
 <label for="" class="form-label">New Password</label>
-
+<div class="input-group mb-3">
+<input type="password" class="form-control">
+<button class="btn btn-outline-secondary" type="button">Show</button>
+</div>
 </div>
 
+<div class="col-6">
+<label for="" class="form-label">Re-Password</label>
+<div class="input-group mb-3">
+<input type="password" class="form-control">
+<button class="btn btn-outline-secondary" type="button">Show</button>
+</div>
 </div>
 
+<div class="col-12">
+<label for="" class="form-label">Verification Code</label>
+<div class="input-group mb-3">
+<input type="text" class="form-control">
+</div>
+</div>
+
+
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Reset</button>
       </div>
     </div>
   </div>
 </div>
 
-
             <!-- mode end -->
-
             <!-- footer -->
             <div class="col-12 fixed-bottom d-none d-lg-block">
                 <p class="text-center">&copy; <?= date("Y")?> eShop.lk || All Rights Reserved</p>
             </div>
             <!-- footer -->
-
         </div>
-
     </div>
-
-
     <script src="script.js"></script>
     <script src="bootstrap.js"></script>
 </body>
-
 </html>
