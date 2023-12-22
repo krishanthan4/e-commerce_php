@@ -57,6 +57,8 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-6">
                                 <label class="form-label">First Name</label>
                                 <input type="text" class="form-control" placeholder="ex:- John" id="fname" />
@@ -109,7 +111,7 @@ endfor;
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-primary" onclick="signUp();">Sign Up</button>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
@@ -129,13 +131,29 @@ endfor;
                                 <p class="title02">Sign In</p>
                             </div>
 
+
+                            <?php 
+
+$email = "";
+$password = "";
+
+if(isset($_COOKIE["email"])){
+$email = $_COOKIE["email"];
+}
+
+if(isset($_COOKIE["password"])){
+    $password = $_COOKIE["password"];
+    }
+
+?>
+
                             <div class="col-12">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email2" value="" />
+                                <input type="email" class="form-control" id="email2" value="<?= $email ?>" />
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password2" value="" />
+                                <input type="password" class="form-control" id="password2" value="<?= $password ?>" />
                             </div>
                             <div class="col-6">
                                 <div class="form-check">
@@ -144,10 +162,10 @@ endfor;
                                 </div>
                             </div>
                             <div class="col-6 text-end">
-                                <a href="#" class="link-primary">Forgot Password?</a>
+                                <a href="#" class="link-primary" onclick="forgotPassword();">Forgot Password?</a>
                             </div>
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary">Sign In</button>
+                                <button class="btn btn-primary" onclick="signin();">Sign In</button>
                             </div>
                             <div class="col-12 col-lg-6 d-grid">
                                 <button class="btn btn-danger" onclick="changeView();">New to eShop? Join Now</button>
@@ -161,6 +179,44 @@ endfor;
             </div>
 
             <!-- content -->
+
+            <!-- mode start -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="fpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+<div class="row g-3">
+
+<div class="col-6">
+
+<label for="" class="form-label">New Password</label>
+
+</div>
+
+</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            <!-- mode end -->
 
             <!-- footer -->
             <div class="col-12 fixed-bottom d-none d-lg-block">
