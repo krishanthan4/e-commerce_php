@@ -199,22 +199,22 @@ include "connection.php";
                                 <div class="col-6">
                                     <label class="form-label">New Password</label>
                                     <div class="input-group mb-3">
-                                        <input type="password" class="form-control" />
-                                        <button class="btn btn-outline-secondary" type="button">Show</button>
+                                        <input type="password" class="form-control" id="np"/>
+                                        <button class="btn btn-outline-secondary" id="npb" type="button" onclick="showPassword1();">Show</button>
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <label class="form-label">Re-type Password</label>
                                     <div class="input-group mb-3">
-                                        <input type="password" class="form-control" />
-                                        <button class="btn btn-outline-secondary" type="button">Show</button>
+                                        <input type="password" class="form-control"  id="rnp"/>
+                                        <button class="btn btn-outline-secondary" id="rnpb" type="button" onclick="showPassword1();">Show</button>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <label class="form-label">Verification Code</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" id="vcode"/>
                                 </div>
 
                             </div>
@@ -222,7 +222,7 @@ include "connection.php";
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Reset</button>
+                            <button type="button" class="btn btn-primary"  onclick="resetPassword();">Reset</button>
                         </div>
                     </div>
                 </div>

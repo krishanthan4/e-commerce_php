@@ -25,27 +25,25 @@ function signup() {
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
-      if (request.status == 200 & request.readyState == 4) {
-          var response = request.responseText;
+    if ((request.status == 200) & (request.readyState == 4)) {
+      var response = request.responseText;
 
-          if (response == "success") {
-              document.getElementById("msg").innerHTML = "Registration Successfull";
-              document.getElementById("msg").className = "alert alert-success";
-              document.getElementById("msgdiv").className = "d-block";
-          } else {
-              document.getElementById("msg").innerHTML = response;
-              document.getElementById("msgdiv").className = "d-block";
-          }
-
+      if (response == "success") {
+        document.getElementById("msg").innerHTML = "Registration Successfull";
+        document.getElementById("msg").className = "alert alert-success";
+        document.getElementById("msgdiv").className = "d-block";
+      } else {
+        document.getElementById("msg").innerHTML = response;
+        document.getElementById("msgdiv").className = "d-block";
       }
-  }
+    }
+  };
 
   request.open("POST", "signupProcess.php", true);
   request.send(form);
 }
 
 function signin() {
-
   var email = document.getElementById("email2");
   var password = document.getElementById("password2");
   var rememberme = document.getElementById("rememberme");
@@ -58,50 +56,126 @@ function signin() {
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
-      if (request.status == 200 & request.readyState == 4) {
-          var response = request.responseText;
+    if ((request.status == 200) & (request.readyState == 4)) {
+      var response = request.responseText;
 
-          if (response == "success") {
-              window.location = "home.php";
-          } else {
-              document.getElementById("msg1").innerHTML = response;
-              document.getElementById("msgdiv1").className = "d-block";
-          }
-
+      if (response == "success") {
+        window.location = "home.php";
+      } else {
+        document.getElementById("msg1").innerHTML = response;
+        document.getElementById("msgdiv1").className = "d-block";
       }
-  }
+    }
+  };
 
   request.open("POST", "signInProcess.php", true);
   request.send(form);
-
 }
 
 var forgotPasswordModal;
 
 function forgotPassword() {
-
   var email = document.getElementById("email2");
 
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
-      if (request.status == 200 & request.readyState == 4) {
-          var text = request.responseText;
+    if ((request.status == 200) & (request.readyState == 4)) {
+      var text = request.responseText;
 
-          if (text == "Success") {
-              alert("Verification code has sent successfully. Please check your Email.");
-              var modal = document.getElementById("fpmodal");
-              forgotPasswordModal = new bootstrap.Modal(modal);
-              forgotPasswordModal.show();
-          } else {
-              document.getElementById("msg1").innerHTML = text;
-              document.getElementById("msgdiv1").className = "d-block";
-          }
-
+      if (text == "Success") {
+        alert(
+          "Verification code has sent successfully. Please check your Email."
+        );
+        var modal = document.getElementById("fpmodal");
+        forgotPasswordModal = new bootstrap.Modal(modal);
+        forgotPasswordModal.show();
+      } else {
+        document.getElementById("msg1").innerHTML = text;
+        document.getElementById("msgdiv1").className = "d-block";
       }
-  }
+    }
+  };
 
   request.open("GET", "forgotPasswordProcess.php?e=" + email.value, true);
   request.send();
+}
+
+function showPassword1() {
+  var textfield = document.getElementById("np");
+  var textfield = document.getElementById("npb");
+
+  if (textfield.type == "password") {
+    textfield.type = "text";
+    button.innerHTML = "Hide";
+  } else {
+    textfield.type = "password";
+    button.innerHTML = "show";
+  }
+}
+
+function showPassword2() {
+  var textfield = document.getElementById("rnp");
+  var textfield = document.getElementById("rnpb");
+
+  if (textfield.type == "password") {
+    textfield.type = "text";
+    button.innerHTML = "Hide";
+  } else {
+    textfield.type = "password";
+    button.innerHTML = "show";
+  }
+}
+
+function resetPassword() {
+  var email = document.getElementById("email2");
+  var newPassword = document.getElementById("np");
+  var retypePassword = document.getElementById("rnp");
+  var verification = document.getElementById("vcode");
+
+  var form = new FormData();
+
+  form.append("email", email.value);
+  form.append("newPassword", newPassword.value);
+  form.append("retypePassword", retypePassword.value);
+  form.append("verification", verification.value);
+
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.status == 200 && request.readyState == 4) {
+      var response = request.responseText;
+
+      if ((response = "success")) {
+        alert("Password updated successfully");
+        forgotPasswordModal.hide();
+      } else {
+        alert(response);
+      }
+    }
+  };
+
+  request.open("POST", "resetPasswordProcess.php", true);
+  request.send(form);
+}
+
+
+function signout(){
+
+var request = new XMLHttpRequest();
+request.onreadystatechange =function(){
+
+  if(request.status==200 && request.readyState==4){
+var response =request.responseText;
+if(response =="success"){
+
+window.location.reload();
 
 }
+
+  }
+}
+
+request.open("GET","signOutProcess.php");
+request.send();
+
+}c
