@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 include "connection.php";
 
 include "SMTP.php";
@@ -9,50 +10,44 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 if(isset($_GET["e"])){
 
-$email = $_GET["e"];
-$rs = Database::search("SELECT * FROM `user` WHERE `email`='".$email."'");
-$n = $rs->num_rows;
+    $email = $_GET["e"];
 
-if($n == 1){
+    $rs = Database::search("SELECT * FROM `user` WHERE `email`='".$email."'");
+    $n = $rs->num_rows;
 
-$code = uniqid();
-Database::iud("UPDATE `user` SET `verification_code`='".$code."' WHERE `email`='".$email."' ");
+    if($n == 1){
 
-$mail = new PHPMailer;
-$mail->IsSMTP();
-$mail->Host = 'smtp.gmail.com';
-$mail->SMTPAuth = true;
-$mail->Username = 'hacktf.academy@gmail.com';
-$mail->Password = 'yzartszzfaeqdqcv';
-$mail->SMTPSecure = 'ssl';
-$mail->Port = 465;
-$mail->setFrom('hacktf.academy@gmail.com', 'Reset Password');
-$mail->addReplyTo('hacktf.academy@gmail.com', 'Reset Password');
-$mail->addAddress($email);
-$mail->isHTML(true);
-$mail->Subject = 'E Shop Forgot Password Verification Code';
-$bodyContent = '<h1 style="color:green;">Your Verification Code is '.$code.' <h1>';
-$bodyContent .= '******************';
-$mail->Body    = $bodyContent;
+        $code = uniqid();
+        Database::iud("UPDATE `user` SET `verification_code`='".$code."' WHERE `email`='".$email."'");
 
+        $mail = new PHPMailer;
+        $mail->IsSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'virajlahiru9719@gmail.com';
+        $mail->Password = 'dqiklogkcjklitlv';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->setFrom('virajlahiru9719@gmail.com', 'Reset Password');
+        $mail->addReplyTo('virajlahiru9719@gmail.com', 'Reset Password');
+        $mail->addAddress($email);
+        $mail->isHTML(true);
+        $mail->Subject = 'eShop Forgot password Verification Code';
+        $bodyContent = '<h1 style="color:green;">Your Verification Code is '.$code.'</h1>';
+        $mail->Body    = $bodyContent;
 
-if(!$mail->send()){
-echo "Verification Code Sending Failed";
+        if(!$mail->send()){
+            echo 'Verification code sending failed.';
+        }else{
+            echo 'Success';
+        }
 
-}else{
-echo "Success";
-}
-
-}else{
-echo ("Invalid Email Address");
-}
+    }else{
+        echo ("Invalid Email Address.");
+    }
 
 }else{
-
-echo ("Please enter your Email Address in Emial Field.");
-
+    echo ("Please enter your Email Address in Email Field.");
 }
-
-
 
 ?>

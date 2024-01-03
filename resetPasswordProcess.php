@@ -1,41 +1,28 @@
 <?php
 
-
 include "connection.php";
 
-$email = $POST["email"];
-$newPassword = $POST["newPassword"];
-$retypePassword = $POST["retypePassword"];
-$vcode = $POST["vcode"];
+$email = $_POST["e"];
+$newpw = $_POST["n"];
+$retypepw = $_POST["r"];
+$vcode = $_POST["v"];
 
-if (empty($email)) {
-    echo ("email must not empty");
+if($newpw != $retypepw){
+    echo ("Password does not match.");
+}else{
 
-} else if (empty($newPassword)) {
-    echo ("New Password field must not empty");
+    $rs = Database::search("SELECT * FROM `user` WHERE `email`='".$email."' AND `verification_code`='".$vcode."'");
+    $num = $rs->num_rows;
 
-} else if (empty($retypePassword)) {
-    echo ("Retype Password  field must not empty");
+    if($num == 1){
 
-} else if (empty($vcode)) {
-    echo ("verification code  field must not empty");
-
-} else if ($newPassword !== $retypePassword) {
-
-    echo ("Password does not match");
-} else {
-    $rs = Database::search("SELECT * FROM `user` WHERE `email`='" . $email . "' AND `verification_code`='" . $vcode . "' ");
-
-    if ($rs->num_rows == 1) {
-
-        Database::iud("UPDATE `user` SET `password`='" . $retypePassword . "' ");
+        Database::iud("UPDATE `user` SET `password`='".$retypepw."' WHERE `email`='".$email."'");
         echo ("success");
-        
-    } else {
 
-        echo ("Invalid Email Address of Verification Code");
+    }else{
+        echo ("Invalid Email Address or Verification Code");
     }
-}
 
+}
 
 ?>

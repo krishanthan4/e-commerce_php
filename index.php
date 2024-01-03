@@ -200,15 +200,15 @@ include "connection.php";
                                     <label class="form-label">New Password</label>
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" id="np"/>
-                                        <button class="btn btn-outline-secondary" id="npb" type="button" onclick="showPassword1();">Show</button>
+                                        <button id="npb" class="btn btn-outline-secondary" type="button" onclick="showPassword1();">Show</button>
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <label class="form-label">Re-type Password</label>
                                     <div class="input-group mb-3">
-                                        <input type="password" class="form-control"  id="rnp"/>
-                                        <button class="btn btn-outline-secondary" id="rnpb" type="button" onclick="showPassword1();">Show</button>
+                                        <input type="password" class="form-control" id="rnp"/>
+                                        <button id="rnpb" class="btn btn-outline-secondary" type="button" onclick="showPassword2();">Show</button>
                                     </div>
                                 </div>
 
@@ -222,7 +222,7 @@ include "connection.php";
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary"  onclick="resetPassword();">Reset</button>
+                            <button type="button" class="btn btn-primary" onclick="resetPassword();">Reset</button>
                         </div>
                     </div>
                 </div>
