@@ -246,3 +246,81 @@ function updateProfile(){
     request.send(form);
     
 }
+
+function addProduct(){
+
+    var category =document.getElementById("category");
+    var brand =document.getElementById("brand");
+    var model =document.getElementById("model");
+    var title =document.getElementById("title");
+    var condition = 0;
+
+    if(document.getElementById("b").checked){
+        condition = 1;
+    }else if(document.getElementById("u").checked){
+condition =2
+    }
+
+
+    var clr =document.getElementById("clr");
+    var qty =document.getElementById("qty");
+    var cost =document.getElementById("cost");
+    var dwc =document.getElementById("dwc");
+    var desc =document.getElementById("desc");
+    var image =document.getElementById("imageuploader");
+
+var form = new FormData();
+form.append("ca",category.value);
+form.append("b",brand.value);
+form.append("m",model.value);
+form.append("t",title.value);
+form.append("con",condition.value);
+form.append("col",clr.value);
+form.append("q",qty.value);
+form.append("co",cost.value);
+form.append("dwc",dwc.value);
+form.append("doc",doc.value);
+form.append("de",desc.value);
+
+var file_count = image.files.length;
+for(var x =0; x< file_count;x++){
+form.append("image"+ x,image.files[x]);
+}
+
+var request = new XMLHttpRequest();
+request.onreadystatechange= ()=>{
+    if(request.status==200 && request.readyState==4){
+var response = request.responseText;
+if(response =='success'){
+window.location.reload();
+}else{
+    alert(response);
+}
+    }
+}
+
+request.open("POST","addProductProcess.php",true);
+request.send(form);
+}
+
+function changeProductImage(){
+    var image = document.getElementById("imageuploader");
+
+    image.onchange = function(){
+        var file_count = image.files.length;
+
+        if(file_count <= 3){
+
+            for(var x = 0;x<file_count;x++){
+
+            var file = this.files[x];
+        var url = window.URL.createObjectURL(file);
+
+        document.getElementById("i" + x).src = url;
+
+        }
+        }else{
+            alert(file_count+ " files You are proceed to upload only 3 or less than 2 files.");
+        }
+    }
+}
