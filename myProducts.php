@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include "connection.php";
 
@@ -6,7 +7,7 @@ if (isset($_SESSION["u"])) {
     $email = $_SESSION["u"]["email"];
     $pageno;
 
-    ?>
+?>
     <!DOCTYPE html>
 
     <html>
@@ -36,25 +37,21 @@ if (isset($_SESSION["u"])) {
                         <div class="col-12 col-lg-4">
                             <div class="row">
                                 <div class="col-12 col-lg-4 mt-1 mb-1 text-center">
-
                                     <?php
                                     $profile_img_rs = Database::search("SELECT * FROM `profile_img` WHERE `user_email`='" . $email . "'");
                                     $profile_img_num = $profile_img_rs->num_rows;
+
                                     if ($profile_img_num == 1) {
                                         $profile_img_data = $profile_img_rs->fetch_assoc();
-                                        ?>
-                                        <img src="<?= $profile_img_data["path"] ?>" width="90px" height="90px"
-                                            class="rounded-circle" />
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <img src="resource/new_user.svg" width="90px" height="90px" class="rounded-circle" />
-                                        <?php
-                                    }
-
-
                                     ?>
-
+                                        <img src="<?php echo $profile_img_data["path"]; ?>" width="90px" height="90px" class="rounded-circle" />
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <img src="resource/new_user.svg" width="90px" height="90px" class="rounded-circle" />
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div class="col-12 col-lg-8">
                                     <div class="row text-center text-lg-start">
@@ -64,9 +61,7 @@ if (isset($_SESSION["u"])) {
                                             </span>
                                         </div>
                                         <div class="col-12">
-                                            <span class="text-black-50 fw-bold">
-                                                <?= $email ?>
-                                            </span>
+                                            <span class="text-black-50 fw-bold"><?php echo $email; ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -79,8 +74,7 @@ if (isset($_SESSION["u"])) {
                                     <h1 class="offset-4 offset-lg-2 text-white fw-bold">My Products</h1>
                                 </div>
                                 <div class="col-12 col-lg-2 mx-2 mb-2 my-lg-4 mx-lg-0 d-grid">
-                                    <button class="btn btn-warning fw-bold" onclick="window.location='addProduct.php'">Add
-                                        Product</button>
+                                    <button class="btn btn-warning fw-bold" onclick="window.location='addProduct.php'">Add Product</button>
                                 </div>
                             </div>
                         </div>
@@ -104,8 +98,7 @@ if (isset($_SESSION["u"])) {
                                         <div class="col-11">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <input type="text" placeholder="Search..." class="form-control"
-                                                        id="s" />
+                                                    <input type="text" placeholder="Search..." class="form-control" id="s" />
                                                 </div>
                                                 <div class="col-1 p-1">
                                                     <label class="form-label"><i class="bi bi-search fs-5"></i></label>
@@ -189,10 +182,10 @@ if (isset($_SESSION["u"])) {
                                         <div class="col-12 text-center mt-3 mb-3">
                                             <div class="row g-2">
                                                 <div class="col-12 col-lg-6 d-grid">
-                                                    <button class="btn btn-success fw-bold">Sort</button>
+                                                    <button class="btn btn-success fw-bold" onclick="sort1(0);">Sort</button>
                                                 </div>
                                                 <div class="col-12 col-lg-6 d-grid">
-                                                    <button class="btn btn-primary fw-bold">Clear</button>
+                                                    <button class="btn btn-primary fw-bold" onclick="clearSort();">Clear</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,37 +207,59 @@ if (isset($_SESSION["u"])) {
 
                                         if (isset($_GET["page"])) {
                                             $pageno = $_GET["page"];
-
                                         } else {
                                             $pageno = 1;
                                         }
+
+                                        $product_rs = Database::search("SELECT * FROM `product` WHERE `user_email`='" . $email . "'");
+                                        $product_num = $product_rs->num_rows;
+
+                                        $results_per_page = 5;
+                                        $number_of_pages = ceil($product_num / $results_per_page);
+
+                                        $page_results = ($pageno - 1) * $results_per_page;
+                                        $selected_rs = Database::search("SELECT * FROM `product` WHERE `user_email`='" . $email . "' 
+                                    LIMIT " . $results_per_page . " OFFSET " . $page_results . "");
+
+                                        $selected_num = $selected_rs->num_rows;
+                                        for ($x = 0; $x < $selected_num; $x++) {
+                                            $selected_data = $selected_rs->fetch_assoc();
                                         ?>
 
-                                        <!-- card -->
-                                        <div class="card mb-3 mt-3 col-12 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-md-4 mt-4">
+                                            <!-- card -->
+                                            <div class="card mb-3 mt-3 col-12 col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-md-4 mt-2">
 
-                                                    <img src="resource/mobile_images/iphone12.jpg"
-                                                        class="img-fluid rounded-start" />
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title fw-bold">Apple iPhone 12</h5>
-                                                        <span class="card-text fw-bold text-primary">Rs. 100000
-                                                            .00</span><br />
-                                                        <span class="card-text fw-bold text-success">10 Items left</span>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" role="switch" />
-                                                            <label class="form-check-label fw-bold text-info" for="">Make
-                                                                Your Product Deactive</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="row g-1">
-                                                                    <div class="col-12 d-grid">
-                                                                        <button
-                                                                            class="btn btn-success fw-bold">Update</button>
+                                                        <?php
+                                                        $product_img_rs = Database::search("SELECT * FROM `product_img` WHERE `product_id`='" . $selected_data["id"] . "'");
+                                                        $product_img_data = $product_img_rs->fetch_assoc();
+                                                        ?>
+                                                        <img src="<?php echo $product_img_data["img_path"]; ?>" class="img-fluid rounded-start img-thumbnail" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title fw-bold"><?php echo $selected_data["title"]; ?></h5>
+                                                            <span class="card-text fw-bold text-primary">Rs. <?php echo $selected_data["price"]; ?> .00</span><br />
+                                                            <span class="card-text fw-bold text-success"><?php echo $selected_data["qty"]; ?> Items left</span>
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" type="checkbox" role="switch" id="toggle<?php echo $selected_data["id"]; ?>" onchange="changeStatus(<?php echo $selected_data['id']; ?>);" <?php if ($selected_data["status_status_id"] == 2) { ?> checked <?php } ?> />
+                                                                <label class="form-check-label fw-bold text-info" for="toggle<?php echo $selected_data["id"]; ?>">
+                                                                    <?php if ($selected_data["status_status_id"] == 1) { ?>
+                                                                        Make Your Product Deactive
+                                                                    <?php } else { ?>
+                                                                        Make Your Product Active
+                                                                    <?php } ?>
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div class="col-12 d-grid">
+                                                                            <button class="btn btn-success fw-bold" onclick="sendid(<?php echo $selected_data['id']; ?>);">
+                                                                                Update
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -252,8 +267,14 @@ if (isset($_SESSION["u"])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- card -->
+                                            <!-- card -->
+
+                                        <?php
+                                        }
+
+                                        ?>
+
+
                                     </div>
                                 </div>
 
@@ -261,15 +282,43 @@ if (isset($_SESSION["u"])) {
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination pagination-lg justify-content-center">
                                             <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Previous">
+                                                <a class="page-link" href="
+                                                <?php if ($pageno <= 1) {
+                                                    echo ("#");
+                                                } else {
+                                                    echo "?page=" . ($pageno - 1);
+                                                } ?>
+                                                " aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">01</a>
-                                            </li>
+
+                                            <?php
+                                            for ($x = 1; $x <= $number_of_pages; $x++) {
+                                                if ($x == $pageno) {
+                                            ?>
+                                                    <li class="page-item active">
+                                                        <a class="page-link" href="<?php echo "?page=" . ($x); ?>"><?php echo $x; ?></a>
+                                                    </li>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<?php echo "?page=" . ($x); ?>"><?php echo $x; ?></a>
+                                                    </li>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+
                                             <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Next">
+                                                <a class="page-link" href="
+                                                <?php if ($pageno >= $number_of_pages) {
+                                                    echo ("#");
+                                                } else {
+                                                    echo "?page=" . ($pageno + 1);
+                                                } ?>
+                                                " aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             </li>
@@ -285,6 +334,8 @@ if (isset($_SESSION["u"])) {
                 </div>
                 <!-- body -->
 
+                <?php include "footer.php"; ?>
+
             </div>
         </div>
 
@@ -292,11 +343,10 @@ if (isset($_SESSION["u"])) {
     </body>
 
     </html>
-
-
-    <?php
+<?php
 
 } else {
     header("Location:home.php");
 }
+
 ?>

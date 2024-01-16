@@ -125,6 +125,7 @@
 
                                             <div class="col-12">
                                                 <label class="form-label">Address Line 01</label>
+
                                                 <?php
                                                 if (empty($address_details["line1"])) {
                                                 ?>
@@ -136,7 +137,9 @@
                                                 <?php
                                                 }
                                                 ?>
+
                                             </div>
+
                                             <div class="col-12">
                                                 <label class="form-label">Address Line 02</label>
                                                 <?php

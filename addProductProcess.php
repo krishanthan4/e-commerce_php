@@ -4,6 +4,7 @@ session_start();
 include "connection.php";
 
 $email = $_SESSION["u"]["email"];
+
 $category = $_POST["ca"];
 $brand = $_POST["b"];
 $model = $_POST["m"];
@@ -16,68 +17,81 @@ $dwc = $_POST["dwc"];
 $doc = $_POST["doc"];
 $desc = $_POST["de"];
 
+// filds validation HW
 
-$mhb_rs = Database::search("SELECT * FROM `model_has_brand` WHERE `model_model_id`='" . $model . "' AND `brand_brand_id` = '" . $brand . "' ");
+$mhb_rs = Database::search("SELECT * FROM `model_has_brand` WHERE `model_model_id`='".$model."' AND 
+`brand_brand_id`='".$brand."'");
+
 $model_has_brand_id;
 
-if ($mhb_rs->num_rows > 0) {
+if($mhb_rs->num_rows > 0){
+
     $mhb_data = $mhb_rs->fetch_assoc();
     $model_has_brand_id = $mhb_data["id"];
 
+}else{
 
-
-} else {
-    Database::iud("INSERT INTO `model_has_brand` (`model_model_id`,`brand_brand_id`) VALUES ('" . $model . "','" . $brand . "')");
+    Database::iud("INSERT INTO `model_has_brand`(`model_model_id`,`brand_brand_id`) VALUES 
+    ('".$model."','".$brand."')");
     $model_has_brand_id = Database::$connection->insert_id;
+
 }
 
 $d = new DateTime();
 $tz = new DateTimeZone("Asia/Colombo");
-$d->setTimeZone($tz);
+$d->setTimezone($tz);
 $date = $d->format("Y-m-d H:i:s");
 
 $status = 1;
-Database::Iud("INSERT INTO `product` (`price`,`qty`,`description`,`title`,`datetime_added`,`delivery_fee_colombo`,`delivery_fee_other`,`category_cat_id`,`model_has_brand_id`,`condition_condition_id`,`status_status_id`,`user_email`) VALUES ('" . $cost . "','" . $qty . "','" . $desc . "','" . $title . "','" . $date . "','" . $dwc . "','" . $category . "','" . $model_has_brand_id . "','" . $condition . "','" . $status . "','" . $email . "')");
+
+Database::iud("INSERT INTO `product`(`price`,`qty`,`description`,`title`,`datetime_added`,`delivery_fee_colombo`,
+`delivery_fee_other`,`category_cat_id`,`model_has_brand_id`,`condition_condition_id`,`status_status_id`,
+`user_email`) VALUES ('".$cost."','".$qty."','".$desc."','".$title."','".$date."','".$dwc."','".$doc."',
+'".$category."','".$model_has_brand_id."','".$condition."','".$status."','".$email."')");
 
 $product_id = Database::$connection->insert_id;
 
 $length = sizeof($_FILES);
 
-if ($length <= 3 && $length > 0) {
+if($length <= 3 && $length > 0){
 
-    $allowed_image_extensions = array("image/jpeg", "image/png", "image/svg+xml");
+    $allowed_image_extensions = array("image/jpeg","image/png","image/svg+xml");
 
-    for ($x = 0; $x < $length; $x++) {
-        if (isset($_FILES["image" . $x])) {
-            $image_extension = $image_file["type"];
+    for($x = 0;$x < $length;$x++){
+        if(isset($_FILES["image".$x])){
 
-            if(in_array($image_extension,$allowed_image_extensions)){
+            $image_file = $_FILES["image".$x];
+            $file_extension = $image_file["type"];
+
+            if(in_array($file_extension,$allowed_image_extensions)){
 
                 $new_img_extension;
 
-                if($image_extension == "image/jpeg"){
+            if($file_extension == "image/jpeg"){
+                $new_img_extension = ".jpeg";
+            }else if($file_extension == "image/png"){
+                $new_img_extension = ".png";
+            }else if($file_extension == "image/svg+xml"){
+                $new_img_extension = ".svg";
+            }
 
-                    $new_image_exension =".jpeg";
-                }else if($image_extension == "image/png"){
+            $file_name = "resource//mobile_images//".$title."_".$x."_".uniqid().$new_img_extension;
+            move_uploaded_file($image_file["tmp_name"],$file_name);
 
-                    $new_image_exension =".png";
-                }else if($image_extension == "image/svg+xml"){
+            Database::iud("INSERT INTO `product_img`(`img_path`,`product_id`) VALUES 
+            ('".$file_name."','".$product_id."')");
 
-                    $new_image_exension =".svg";
-                }
-$file_name = "resource//mobile_images//".$title."_".$x."_".uniqid().$new_img_extension;
-move_uploaded_file($image_file["tmp_name"],$file_name);
-Database::iud("INSERT INTO `product_img` (`img_path`,`product_id`) VALUES ('".$file_name."','".$product_id."')");
+            }else{
+                echo ("Inavid image type.");
+            }
 
+        }
+    }
+
+    echo ("success");
 
 }else{
-                echo ("Invalid Image Type !");
-            }
-        }
-
-    }
-} else {
-    echo ("Invalid Image Count");
+    echo ("Invalid Image Count.");
 }
 
 ?>
