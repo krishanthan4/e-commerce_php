@@ -1,3 +1,16 @@
+<?php 
+include "connection.php";
+
+if(isset($_GET["id"])){
+    
+    $pid = $_GET["id"];
+    $product_rs = Database::search("SELECT product.id,product.price,product.qty,product.description,product.title,product.datetime_added,product.delivery_fee_colombo,product.delivery_fee_other,product.category_cat_id,product.model_has_brand_id,product.condition_condition_id,product.status_status_id,product.user_email,model.model_name AS mname,brand.brand.brand_name AS bname  FROM `product` INNER JOIN `model_has_brand` ON model_has_brand.id=product.model_has_brand_id INNER JOIN `brand` ON brand.brand_id=model_has_brand.brand_id = INNER JOIN `model` ON model.model_id = model_has_brand.model_model_id WHERE product.id = '".$pid."'");
+$product_num = $product_rs->num_rows;
+if($product_num ==1){
+
+    $product_data = $product_rs->fetch_assoc();
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -5,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Samsung J7 | eShop</title>
+    <title><?= $product_data["title"]?> | eShop</title>
 
     <link rel="stylesheet" href="bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -313,3 +326,15 @@
 </body>
 
 </html>
+
+<?php
+}else{
+    echo("Sorry for the inconvenience.Please try again later");
+
+}
+    
+}else{
+    echo("Something Went Wrong");
+}
+?>
+

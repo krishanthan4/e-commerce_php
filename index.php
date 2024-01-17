@@ -1,6 +1,6 @@
 <?php
 
-include "connection.php";
+require_once "connection.php";
 
 ?>
 
@@ -110,12 +110,11 @@ include "connection.php";
 
                                 </select>
                             </div>
-
-                            <div class="col-12 col-lg-6 d-grid">
+                            <div class="col-12 col-lg-6 ">
                                 <button class="btn btn-primary" onclick="signup();">Sign Up</button>
                             </div>
 
-                            <div class="col-12 col-lg-6 d-grid">
+                            <div class="col-12 col-lg-6 ">
                                 <button class="btn btn-dark" onclick="changeView();">Already have an account? Sign In</button>
                             </div>
 
