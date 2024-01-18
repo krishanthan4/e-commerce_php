@@ -525,3 +525,78 @@ function advancedSearch(x){
     request.send(form);
 
 }
+
+function loadMainImg(id){
+
+    var sample_img = document.getElementById("productImg"+id).src;
+    var main_img = document.getElementById("mainImg");
+
+    main_img.style.backgroundImage="url("+sample_img+")";
+}
+
+function check_value(qty){
+var input = document.getElementById("qty_input");
+
+if(input.value<=0){
+alert("Quantity must be 01 or more.");
+input.value =1;
+}else if(input.value> qty){
+
+alert("Insufficient Quantity.");
+input.value=qty;
+}
+
+}
+
+function qty_inc(qty){
+
+var input = document.getElementById("qty_input");
+
+if(input.value > 1){
+var newValue = parseInt(input.value);
+input.value = newValue.toString;
+
+}else{
+    alert("Minimum quantity has achieved");
+    input.value = 1;
+}
+}
+
+
+function qty_dec(){
+
+    var input = document.getElementById("qty_input");
+
+    if(input.value > 1){
+    var newValue = parseInt(input.value)-1;
+    input.value = newValue.toString;
+    
+    }else{
+        alert("Minimum quantity has achieved");
+        input.value = 1;
+    }
+
+}
+
+function addToWatchlist(){
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = () => {
+if(request.readyState==4&& request.status==200){
+    
+var response = request.responseText;
+
+if(response=="added"){
+document.getElementById("heart"+id).style.className="text-danger";
+window.location.reload();
+}else if (response=="removed"){
+    document.getElementById("heart"+id).style.className="text-dark";
+    window.location.reload();
+}else{
+    alert(response);
+}
+    }
+}
+request.open("GET","addToWatchlistProcess.php?id="+id,true);
+request.send();
+}

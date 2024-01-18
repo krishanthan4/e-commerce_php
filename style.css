@@ -146,3 +146,11 @@
 .qty-dec{
     border-bottom-right-radius: 5px;
 }
+
+.emptyView{
+    height: 400px;
+    background-image: url("resource/watchlistEmptyView.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

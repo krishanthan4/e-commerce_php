@@ -37,7 +37,8 @@ include "connection.php";
                     <div class="col-12 col-lg-6">
 
                         <div class="input-group mt-3 mb-3">
-                            <input type="text" class="form-control" aria-label="Text input with dropdown button" id="basic_search_txt">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button"
+                                id="basic_search_txt">
 
                             <select class="form-select" style="max-width: 250px;" id="basic_search_select">
                                 <option value="0">All Categories</option>
@@ -48,11 +49,11 @@ include "connection.php";
 
                                 for ($x = 0; $x < $category_num; $x++) {
                                     $category_data = $category_rs->fetch_assoc();
-                                ?>
+                                    ?>
                                     <option value="<?php echo $category_data["cat_id"]; ?>">
                                         <?php echo $category_data["cat_name"]; ?>
                                     </option>
-                                <?php
+                                    <?php
                                 }
 
                                 ?>
@@ -83,36 +84,46 @@ include "connection.php";
                     <div class="col-12 d-none d-lg-block mb-3">
                         <div class="row">
 
-                            <div id="carouselExampleIndicators" class="offset-2 col-8 carousel slide" data-bs-ride="true">
+                            <div id="carouselExampleIndicators" class="offset-2 col-8 carousel slide"
+                                data-bs-ride="true">
                                 <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="0" class="active" aria-current="true"
+                                        aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="2" aria-label="Slide 3"></button>
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="resource/slider_images/posterimg.jpg" class="d-block img-thumbnail poster-img-1" />
+                                        <img src="resource/slider_images/posterimg.jpg"
+                                            class="d-block img-thumbnail poster-img-1" />
                                         <div class="carousel-caption d-none d-md-block poster-caption">
                                             <h5 class="poster-title">Welcome to eShop</h5>
                                             <p class="poster-txt">The World's Best Online Store By One Click.</p>
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="resource/slider_images/posterimg2.jpg" class="d-block img-thumbnail poster-img-1" />
+                                        <img src="resource/slider_images/posterimg2.jpg"
+                                            class="d-block img-thumbnail poster-img-1" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="resource/slider_images/posterimg3.jpg" class="d-block img-thumbnail poster-img-1" />
+                                        <img src="resource/slider_images/posterimg3.jpg"
+                                            class="d-block img-thumbnail poster-img-1" />
                                         <div class="carousel-caption d-none d-md-block poster-caption-1">
                                             <h5 class="poster-title">Be Free.....</h5>
                                             <p class="poster-txt">Experience the Lowest Delivery Costs With Us.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -129,7 +140,7 @@ include "connection.php";
 
                     for ($y = 0; $y < $category_num2; $y++) {
                         $category_data2 = $category_rs2->fetch_assoc();
-                    ?>
+                        ?>
                         <!-- Category Name -->
 
                         <div class="col-12 mt-3 mb-3">
@@ -157,7 +168,7 @@ include "connection.php";
 
                                         for ($z = 0; $z < $product_num; $z++) {
                                             $product_data = $product_rs->fetch_assoc();
-                                        ?>
+                                            ?>
 
                                             <div class="card col-6 col-lg-2 mt-2 mb-2" style="width: 18rem;">
 
@@ -166,46 +177,71 @@ include "connection.php";
                                                 $img_data = $img_rs->fetch_assoc();
                                                 ?>
 
-                                                <img src="<?php echo $img_data["img_path"]; ?>" class="card-img-top img-thumbnail mt-2" style="height: 180px;" />
+                                                <img src="<?php echo $img_data["img_path"]; ?>"
+                                                    class="card-img-top img-thumbnail mt-2" style="height: 180px;" />
                                                 <div class="card-body ms-0 m-0 text-center">
-                                                    <h5 class="card-title fw-bold fs-6"><?php echo $product_data["title"]; ?></h5>
+                                                    <h5 class="card-title fw-bold fs-6">
+                                                        <?php echo $product_data["title"]; ?>
+                                                    </h5>
                                                     <span class="badge rounded-pill text-bg-info">New</span><br />
-                                                    <span class="card-text text-primary">Rs. <?php echo $product_data["price"]; ?> .00</span><br />
+                                                    <span class="card-text text-primary">Rs.
+                                                        <?php echo $product_data["price"]; ?> .00
+                                                    </span><br />
 
                                                     <?php
                                                     if ($product_data["qty"] > 0) {
 
-                                                    ?>
+                                                        ?>
                                                         <span class="card-text text-warning fw-bold">In Stock</span><br />
-                                                        <span class="card-text text-success fw-bold"><?php echo $product_data["qty"]; ?> Items Available</span><br /><br />
-                                                        <a href='<?php echo "singleProductView.php?id=".($product_data["id"]);?>' class="col-12 btn btn-success">Buy Now</a>
+                                                        <span class="card-text text-success fw-bold">
+                                                            <?php echo $product_data["qty"]; ?> Items Available
+                                                        </span><br /><br />
+                                                        <a href='<?php echo "singleProductView.php?id=" . ($product_data["id"]); ?>'
+                                                            class="col-12 btn btn-success">Buy Now</a>
                                                         <button class="col-12 btn btn-dark mt-2">
                                                             <i class="bi bi-cart-plus-fill text-white fs-5"></i>
                                                         </button>
-                                                    <?php
+                                                        <?php
 
                                                     } else {
-                                                    ?>
+                                                        ?>
                                                         <span class="card-text text-danger fw-bold">Out Of Stock</span><br />
-                                                        <span class="card-text text-danger fw-bold">00 Items Available</span><br /><br />
+                                                        <span class="card-text text-danger fw-bold">00 Items
+                                                            Available</span><br /><br />
                                                         <a href='#' class="col-12 btn btn-success disabled">Buy Now</a>
                                                         <button class="col-12 btn btn-dark mt-2 disabled">
                                                             <i class="bi bi-cart-plus-fill text-white fs-5"></i>
                                                         </button>
-                                                    <?php
+                                                        <?php
                                                     }
+
+                                 if(isset($_SESSION["u"])){
+                                    $watchlist_rs = Database::search("SELECT * FROM `watchlist` WHERE `user_email`='" . $_SESSION["u"]["email"] . "' AND `product_id`='" . $product_data["id"] . "'");
+                                    $watchlist_num = $watchlist_rs->num_rows;
+
+                                    if ($watchlist_num == 1) {
+                                        ?>
+                                         <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchlist(<?= $product_data['id']?>);">
+                                            <i class="bi bi-heart-fill text-danger fs-5" id="heart"<?= $product_data["id"]?>></i>
+                                        </button>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchlist(<?= $product_data['id']?>);">
+                                            <i class="bi bi-heart-fill text-dark fs-5" id="heart"<?= $product_data["id"]?>></i>
+                                        </button>
+                                        <?php
+                                    }
+
+
+                                 }
                                                     ?>
 
-
-
-                                                    <button class="col-12 btn btn-outline-light mt-2 border border-primary">
-                                                        <i class="bi bi-heart-fill text-danger fs-5"></i>
-                                                    </button>
 
                                                 </div>
                                             </div>
 
-                                        <?php
+                                            <?php
                                         }
 
                                         ?>
@@ -219,7 +255,7 @@ include "connection.php";
                         </div>
 
                         <!-- products -->
-                    <?php
+                        <?php
                     }
 
                     ?>
