@@ -600,3 +600,50 @@ window.location.reload();
 request.open("GET","addToWatchlistProcess.php?id="+id,true);
 request.send();
 }
+
+function removeFromWatchlist(id){
+
+var request =new XMLHttpRequest();
+request.onreadystatechange= ()=>{
+    if(request.status==200 && request.readyState==4){
+
+        var response = request.responseText;
+        alert(response);
+    }
+}
+
+request.open("GET","removeWatchlistProcess.php?id="+id,true);
+request.send();
+
+
+}
+
+
+function addToCart(id){
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange= () => {
+        if(request.status==200 && request.readyState==4){
+var response = request.responseText;
+alert(response);
+        }
+    }
+    request.open("GET","addToCartProcess.php?id=" +id,true);
+    request.send();
+}
+
+function payNow(id){
+
+    var qty = document.getElementById("qty_input").value;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = ()=> {
+        if(request.status ==200 && request.readyState ==4){
+var response =request.responseText;
+alert(response);
+
+        }
+    }
+    request.open("GET","buyNowProcess.php?id="+id+ "&qty="+qty,true);
+request.send();
+
+}
