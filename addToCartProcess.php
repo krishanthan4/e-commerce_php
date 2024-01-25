@@ -1,40 +1,45 @@
-<?php 
+<?php
+
 session_start();
-include("connection.php");
+include "connection.php";
 
 if(isset($_SESSION["u"])){
-if(isset($_GET["id"])){
+    if(isset($_GET["id"])){
 
-    $id = $_GET["id"];
-    $umail = $_SESSION["u"]["email"];
+        $pid = $_GET["id"];
+        $umail = $_SESSION["u"]["email"];
 
-    $cart_rs = Database::search("SELECT * FROM `cart` WHERE `product_id`='".$pid."' AND `user_email`='".$umail."' ");
-    $cart_num = $cart_rs->num_rows;
-    $product_rs = Database::search("SELECT * FROM `product` WHERE `id`='".$pid."'");
-    $product_data = $product_rs->fetch_assoc();
+        $cart_rs = Database::search("SELECT * FROM `cart` WHERE `product_id`='".$pid."' AND `user_email`='".$umail."'");
+        $cart_num = $cart_rs->num_rows;
 
-    $product_qty= $product_data["qty"];
+        $product_rs = Database::search("SELECT * FROM `product` WHERE `id`='".$pid."'");
+        $product_data = $product_rs->fetch_assoc();
 
-    if($cart_num==1){
-$cart_data = $cart_rs->fetch_assoc();
-$current_qty = $cart_data["qty"];
-$new_qty = (int)$current_qty +1;
+        $product_qty = $product_data["qty"];
 
-if($product_qty >= $new_qty){
+        if($cart_num == 1){
 
-    Database::search("UPDATE `cart` SET `qty`='".$new_qty."' WHERE `cart_id`='".$cart_data["cart_id"]."'");
-    echo("Cart updated");
+            $cart_data = $cart_rs->fetch_assoc();
+            $current_qty = $cart_data["qty"];
+            $new_qty = (int)$current_qty + 1;
+
+            if($product_qty >= $new_qty){
+                Database::iud("UPDATE `cart` SET `qty`='".$new_qty."' WHERE `cart_id`='".$cart_data["cart_id"]."'");
+                echo ("Cart updated");
+            }else{
+                echo ("Invalid Quantity");
+            }
+
+        }else{
+            Database::iud("INSERT INTO `cart`(`qty`,`user_email`,`product_id`) VALUES ('1','".$umail."','".$pid."')");
+            echo ("New product added to the cart.");
+        }
+
+    }else{
+        echo ("Someting Went Wrong.");
+    }
 }else{
-    echo("Invalid Quantity");
+    echo ("Please Login or Signup first.");
 }
-    
 
-}else{
-    Database::iud("INSERT INTO `cart`(`qty`,`user_email`,`product_id`) VALUES ('1','".$umail."','".$pid."')");
-    echo "Something Went Wrong.";
-}
-}else{
-    echo "Please Login or Signup first.";
-}
-}
 ?>

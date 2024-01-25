@@ -56,14 +56,14 @@
                             <li><a class="dropdown-item" href="userProfile.php">My Profile</a></li>
                             <li><a class="dropdown-item" href="#">My Sellings</a></li>
                             <li><a class="dropdown-item" href="myProducts.php">My Products</a></li>
-                            <li><a class="dropdown-item" href="#">Watchlist</a></li>
+                            <li><a class="dropdown-item" href="watchlist.php">Watchlist</a></li>
                             <li><a class="dropdown-item" href="#">Purchase History</a></li>
                             <li><a class="dropdown-item" href="#">Messages</a></li>
                             <li><a class="dropdown-item" href="#">Contact Admin</a></li>
                         </ul>
                     </div>
 
-                    <div class="col-1 col-lg-3 ms-5 ms-lg-0 mt-1 cart-icon"></div>
+                    <div class="col-1 col-lg-3 ms-5 ms-lg-0 mt-1 cart-icon" onclick="window.location='cart.php';"></div>
 
                     <!-- msg modal -->
                     <div class="modal" tabindex="-1" id="contactAdmin">
