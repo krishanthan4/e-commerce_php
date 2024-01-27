@@ -386,11 +386,11 @@ $feedback_data = $feedback_rs->fetch_assoc();
 
                                             <div class="col-12">
                                                 <b>
-                                                    good Product
+                                                    <?= $feedback_data["feed"];?>
                                                 </b>
                                             </div>
                                             <div class="offset-6 col-6 text-end">
-                                                <label class="form-label fs-6 text-black-50">2023-12-20 10:20:40</label>
+                                                <label class="form-label fs-6 text-black-50"><?= $feedback_data["date"]?></label>
                                             </div>
                                         </div>
                                     </div>

@@ -833,3 +833,29 @@ m.hide();
     request.open("POST","saveFeedbackProcess.php",true);
     request.send(form);
 }
+
+
+function send_msg(){
+
+    var receiver_mail = document.getElementById("rmail");
+    var msg_txt = document.getElementById("msg_txt");
+
+    var form = new FormData();
+    form.append("rm",receiver_mail.innerHTML);
+    form.append("mt",msg_txt.value);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange= ()=>{
+if(request.status == 200 && request.readyState == 4){
+var response = request.responseText;
+response = request.responseText;
+    alert("");
+
+
+}
+    }
+request.open("POST","sendMsgProcess.php",true);
+request.send(form);
+
+}
