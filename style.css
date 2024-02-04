@@ -175,3 +175,11 @@
     height: 510px;
     overflow-y: scroll;
 }
+
+.first-place{
+    height: 90px;
+    background-image: url("resource/firstplace.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

@@ -1,23 +1,26 @@
-<?php 
+<?php
 
-class Database {
+class Database{
 
     public static $connection;
+
     public static function setUpConnection(){
         if(!isset(Database::$connection)){
-Database::$connection = new mysqli("localhost","root","Abcd!234","eshop","3306");
+            Database::$connection = new mysqli("localhost","root","LahiruJava03@","eshop","3306");
         }
     }
-    
-    public static function iud($query){
-Database::setUpConnection();
-Database::$connection->query($query);
+
+    public static function iud($q){
+        Database::setUpConnection();
+        Database::$connection->query($q);
     }
-    public static function search($query){
-Database::setUpConnection();
-$resultset= Database::$connection->query($query);
-return $resultset;  
+
+    public static function search($q){
+        Database::setUpConnection();
+        $resultset = Database::$connection->query($q);
+        return $resultset;
     }
+
 }
 
 ?>

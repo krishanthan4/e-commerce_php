@@ -274,7 +274,7 @@ if (isset($_GET["id"])) {
                                             <div class="card" style="width: 18rem;">
                                                 <img src="resource/mobile_images/iphone_11.jpeg" class="card-img-top" />
                                                 <div class="card-body">
-                                                    <h5 class="card-title"><?php echo $related_data["title"] ; ?></h5>
+                                                    <h5 class="card-title"><?php echo $related_data["title"]; ?></h5>
                                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                                     <a href="#" class="btn btn-primary">Go somewhere</a>
                                                 </div>
@@ -352,55 +352,51 @@ if (isset($_GET["id"])) {
                             <div class="col-12 col-lg-6">
                                 <div class="row border border-1 border-dark rounded overflow-scroll me-0" style="height: 300px;">
 
-<?php 
+                                    <?php
 
-$feedback_rs = Database::search("SELECT * FROM `feedback` INNER JOIN `user` ON feedback.user_email = user.email WHERE `product_id`='".$pid."' ");
-$feedback_num = $feedback_rs->num_rows;
+                                    $feedback_rs = Database::search("SELECT * FROM `feedback` INNER JOIN `user` ON 
+                                feedback.user_email=user.email WHERE `product_id`='" . $pid . "'");
 
-for($y = 0;$y < $feedback_num;$y++){
-$feedback_data = $feedback_rs->fetch_assoc();
-?>
-      <div class="col-12 mt-1 mb-1 mx-1">
-                                        <div class="row border border-1 border-dark rounded me-0">
+                                    $feedback_num = $feedback_rs->num_rows;
 
-                                            <div class="col-10 mt-1 mb-1 ms-0"><?php $feedback_data["fname"]." ".$feedback_data["lname"];?></div>
-                                            <div class="col-2 mt-1 mb-1 me-0">
+                                    for ($y = 0; $y < $feedback_num; $y++) {
+                                        $feedback_data = $feedback_rs->fetch_assoc();
 
-                                             <?php
-                                             if($feedback_data["type"]==1){
-                                            ?>
-                                               <span class="badge bg-success">Positive</span>
-                                               <?php
-                                            } else  if($feedback_data["type"]==2){
+                                    ?>
+                                        <div class="col-12 mt-1 mb-1 mx-1">
+                                            <div class="row border border-1 border-dark rounded me-0">
+
+                                                <div class="col-10 mt-1 mb-1 ms-0"><?php echo $feedback_data["fname"]." ".$feedback_data["lname"]; ?></div>
+                                                <div class="col-2 mt-1 mb-1 me-0">
+
+                                                <?php
+
+                                                if($feedback_data["type"] == 1){
+                                                    ?><span class="badge bg-success">Positive</span><?php
+                                                }else if($feedback_data["type"] == 2){
+                                                    ?><span class="badge bg-warning">Neutral</span><?php
+                                                }else if($feedback_data["type"] == 3){
+                                                    ?><span class="badge bg-danger">Negative</span><?php
+                                                }
+
                                                 ?>
-                                                   <span class="badge bg-warning">Neutral</span>
-                                                   <?php
-                                                }else if($feedback_data["type"]==3){
-                                                    ?>
-                                                       <span class="badge bg-danger">Negative</span>
-                                                       <?php
-                                                    }
-                                             
-                                             ?>
-                                            </div>
 
-                                            <div class="col-12">
-                                                <b>
-                                                    <?= $feedback_data["feed"];?>
-                                                </b>
-                                            </div>
-                                            <div class="offset-6 col-6 text-end">
-                                                <label class="form-label fs-6 text-black-50"><?= $feedback_data["date"]?></label>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <b><?php echo $feedback_data["feed"]; ?></b>
+                                                </div>
+                                                <div class="offset-6 col-6 text-end">
+                                                    <label class="form-label fs-6 text-black-50"><?php echo $feedback_data["date"]; ?></label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-<?php
+                                    <?php
 
-}
+                                    }
 
-?>
+                                    ?>
 
-                              
                                 </div>
                             </div>
 

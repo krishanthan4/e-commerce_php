@@ -788,7 +788,7 @@ function saveInvoice(orderId, id, mail, amount, qty) {
 
 }
 
-function printInvoice(){
+function printInvoice() {
     var restorePage = document.body.innerHTML;
     var page = document.getElementById("page").innerHTML;
     document.body.innerHTML = page;
@@ -797,65 +797,278 @@ function printInvoice(){
 }
 
 var m;
-function addFeedback(id){
-
-    var feedbackModal = document.getElementById("feedbackmodal"+id);
+function addFeedback(id) {
+    var feedbackModal = document.getElementById("feedbackmodal" + id);
     m = new bootstrap.Modal(feedbackModal);
     m.show();
 }
 
+function saveFeedback(id) {
 
-function saveFeedback(id){
+    var type;
+
+    if (document.getElementById("type1").checked) {
+        type = 1;
+    } else if (document.getElementById("type2").checked) {
+        type = 2;
+    } else if (document.getElementById("type3").checked) {
+        type = 3;
+    }
 
     var feedback = document.getElementById("feed");
 
     var form = new FormData();
-    form.append("pid",id);
-    form.append("t",type);
-    form.append("f",feedback.value);
+    form.append("pid", id);
+    form.append("t", type);
+    form.append("f", feedback.value);
 
     var request = new XMLHttpRequest();
-    
-    request.onreadystatechange= ()=>{
-        if(request.status ==200 && request.readyState==4){
 
-            var response =request.responseText;
-
-if(response=request.responseText){
-alert("Feedback saved");
-m.hide();
-}else{
-    alert(response);
-}
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            if (response == "success") {
+                alert("Feedback saved.");
+                m.hide();
+            } else {
+                alert(response);
+            }
         }
     }
 
-    request.open("POST","saveFeedbackProcess.php",true);
+    request.open("POST", "saveFeedbackProcess.php", true);
     request.send(form);
+
 }
 
+function send_msg() {
 
-function send_msg(){
+    var recever_mail = "0";
 
-    var receiver_mail = document.getElementById("rmail");
+    var r2 = document.getElementById("select_user");
+
+    if(r2 == 0){
+        var r1 = document.getElementById("rmail");
+        recever_mail = r1.innerHTML;
+    }else{
+        recever_mail = r2.value;
+    }
+
     var msg_txt = document.getElementById("msg_txt");
 
     var form = new FormData();
-    form.append("rm",receiver_mail.innerHTML);
-    form.append("mt",msg_txt.value);
+    form.append("rm", recever_mail);
+    form.append("mt", msg_txt.value);
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange= ()=>{
-if(request.status == 200 && request.readyState == 4){
-var response = request.responseText;
-response = request.responseText;
-    alert("");
+    request.onreadystatechange = function (){
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            if (response == "success") {
+                alert("Message sent.");
+                window.location.reload();
+            } else {
+                alert(response);
+            }
+        }
+    }
 
+    request.open("POST", "sendMsgProcess.php", true);
+    request.send(form);
 
 }
-    }
-request.open("POST","sendMsgProcess.php",true);
-request.send(form);
 
+function viewMessage(email) {
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            document.getElementById("chat_box").innerHTML=response;
+            // alert (response);
+        }
+    }
+
+    request.open("GET", "viewMsgProcess.php?e=" + email, true);
+    request.send();
+
+}
+
+var av;
+function adminVerification(){
+
+    var email = document.getElementById("e");
+
+    var form = new FormData();
+    form.append("e",email.value);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function(){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            if(response == "Success"){
+                alert ("Please take a look at your email to find the VERIFICATION CODE.");
+                var adminVerificationModal = document.getElementById("verificationModal");
+                av = new bootstrap.Modal(adminVerificationModal);
+                av.show();
+            }else{
+                alert (response);
+            }
+            
+        }
+    }
+
+    request.open("POST","adminVerificationProcess.php",true);
+    request.send(form);
+
+}
+
+function verify(){
+
+    var code = document.getElementById("vcode");
+
+    var form = new FormData();
+    form.append("c",code.value);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function (){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            if(response == "success"){
+                av.hide();
+                window.location = "adminPanel.php";
+            }else{
+                alert (response);
+            }
+            
+        }
+    }
+
+    request.open("POST","verificationProcess.php",true);
+    request.send(form);
+
+}
+
+function blockUser(email){
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function (){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            alert (response);
+            window.location.reload();
+        }
+    }
+
+    request.open("GET","userBlockProcess.php?email="+email,true);
+    request.send();
+
+}
+
+var mm;
+
+function viewMsgModal(email){
+    var m = document.getElementById("userMsgModal"+email);
+    mm = new bootstrap.Modal(m);
+    mm.show();
+}
+
+function blockProduct(id){
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function(){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            alert (response);
+            window.location.reload();
+        }
+    }
+
+    request.open("GET","productBlockProcess.php?id="+id,true);
+    request.send();
+    
+}
+
+var pm;
+
+function viewProductModal(id){
+    var m = document.getElementById("viewProductModal"+id);
+    pm = new bootstrap.Modal(m);
+    pm.show();
+}
+
+var cm;
+
+function addNewCategory(){
+    var m = document.getElementById("addCategoryModal");
+    cm = new bootstrap.Modal(m);
+    cm.show();
+}
+
+var vc;
+var e;
+var n;
+
+function verifyCategory(){
+
+    var ncm = document.getElementById("addCategoryVerificationModal");
+    vc = new bootstrap.Modal(ncm);
+
+    e = document.getElementById("e").value;
+    n = document.getElementById("n").value;
+
+    var form = new FormData();
+    form.append ("email",e);
+    form.append ("name",n);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function (){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            if(response == "Success"){
+                cm.hide();
+                vc.show();
+            }else{
+                alert (response);
+            }
+        }
+    }
+
+    request.open("POST","addNewCategoryProcess.php",true);
+    request.send(form);
+
+}
+
+function saveCategory(){
+    var txt = document.getElementById("txt").value;
+
+    var form = new FormData();
+    form.append("t",txt);
+    form.append("e",e);
+    form.append("n",n);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function (){
+        if(request.status == 200 & request.readyState == 4){
+            var response = request.responseText;
+            if(response == "success"){
+                vc.hide();
+                window.location.reload();
+            }else{
+                alert (response);
+            }
+            
+        }
+    }
+
+    request.open("POST","saveCategoryProcess.php",true);
+    request.send(form);
 }

@@ -47,7 +47,7 @@ if(isset($_SESSION["u"])){
         $city = $district_data["city_name"];
 
         $merchant_id = "1224051";
-        $merchant_secret = "MTc4MzEwOTc0MDQ1NzI0MDAzMDE5MTYwMjQ0NzM1NjY0MTUyNw==";
+        $merchant_secret = "MzYxNzE4ODc1OTM5MzYxMTM2MzExNTA2MjQ1M";
         $currency = "LKR";
 
         $hash = strtoupper(
