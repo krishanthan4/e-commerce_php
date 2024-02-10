@@ -26,7 +26,7 @@ if(isset($_POST["e"])){
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'virajlahiru9719@gmail.com';
-        $mail->Password = 'fhouciwxzxxmfwcd';
+        $mail->Password = 'nbfalksyopggijwi';
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
         $mail->setFrom('virajlahiru9719@gmail.com', 'Admin Verification');

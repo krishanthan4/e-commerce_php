@@ -847,10 +847,10 @@ function send_msg() {
 
     var r2 = document.getElementById("select_user");
 
-    if(r2 == 0){
+    if (r2 == 0) {
         var r1 = document.getElementById("rmail");
         recever_mail = r1.innerHTML;
-    }else{
+    } else {
         recever_mail = r2.value;
     }
 
@@ -862,7 +862,7 @@ function send_msg() {
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function (){
+    request.onreadystatechange = function () {
         if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
             if (response == "success") {
@@ -886,7 +886,7 @@ function viewMessage(email) {
     request.onreadystatechange = function () {
         if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            document.getElementById("chat_box").innerHTML=response;
+            document.getElementById("chat_box").innerHTML = response;
             // alert (response);
         }
     }
@@ -897,115 +897,115 @@ function viewMessage(email) {
 }
 
 var av;
-function adminVerification(){
+function adminVerification() {
 
     var email = document.getElementById("e");
 
     var form = new FormData();
-    form.append("e",email.value);
+    form.append("e", email.value);
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function(){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            if(response == "Success"){
-                alert ("Please take a look at your email to find the VERIFICATION CODE.");
+            if (response == "Success") {
+                alert("Please take a look at your email to find the VERIFICATION CODE.");
                 var adminVerificationModal = document.getElementById("verificationModal");
                 av = new bootstrap.Modal(adminVerificationModal);
                 av.show();
-            }else{
-                alert (response);
+            } else {
+                alert(response);
             }
-            
+
         }
     }
 
-    request.open("POST","adminVerificationProcess.php",true);
+    request.open("POST", "adminVerificationProcess.php", true);
     request.send(form);
 
 }
 
-function verify(){
+function verify() {
 
     var code = document.getElementById("vcode");
 
     var form = new FormData();
-    form.append("c",code.value);
+    form.append("c", code.value);
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function (){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            if(response == "success"){
+            if (response == "success") {
                 av.hide();
                 window.location = "adminPanel.php";
-            }else{
-                alert (response);
+            } else {
+                alert(response);
             }
-            
+
         }
     }
 
-    request.open("POST","verificationProcess.php",true);
+    request.open("POST", "verificationProcess.php", true);
     request.send(form);
 
 }
 
-function blockUser(email){
+function blockUser(email) {
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function (){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            alert (response);
+            alert(response);
             window.location.reload();
         }
     }
 
-    request.open("GET","userBlockProcess.php?email="+email,true);
+    request.open("GET", "userBlockProcess.php?email=" + email, true);
     request.send();
 
 }
 
 var mm;
 
-function viewMsgModal(email){
-    var m = document.getElementById("userMsgModal"+email);
+function viewMsgModal(email) {
+    var m = document.getElementById("userMsgModal" + email);
     mm = new bootstrap.Modal(m);
     mm.show();
 }
 
-function blockProduct(id){
+function blockProduct(id) {
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function(){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            alert (response);
+            alert(response);
             window.location.reload();
         }
     }
 
-    request.open("GET","productBlockProcess.php?id="+id,true);
+    request.open("GET", "productBlockProcess.php?id=" + id, true);
     request.send();
-    
+
 }
 
 var pm;
 
-function viewProductModal(id){
-    var m = document.getElementById("viewProductModal"+id);
+function viewProductModal(id) {
+    var m = document.getElementById("viewProductModal" + id);
     pm = new bootstrap.Modal(m);
     pm.show();
 }
 
 var cm;
 
-function addNewCategory(){
+function addNewCategory() {
     var m = document.getElementById("addCategoryModal");
     cm = new bootstrap.Modal(m);
     cm.show();
@@ -1015,7 +1015,7 @@ var vc;
 var e;
 var n;
 
-function verifyCategory(){
+function verifyCategory() {
 
     var ncm = document.getElementById("addCategoryVerificationModal");
     vc = new bootstrap.Modal(ncm);
@@ -1024,51 +1024,154 @@ function verifyCategory(){
     n = document.getElementById("n").value;
 
     var form = new FormData();
-    form.append ("email",e);
-    form.append ("name",n);
+    form.append("email", e);
+    form.append("name", n);
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function (){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            if(response == "Success"){
+            if (response == "Success") {
                 cm.hide();
                 vc.show();
-            }else{
-                alert (response);
+            } else {
+                alert(response);
             }
         }
     }
 
-    request.open("POST","addNewCategoryProcess.php",true);
+    request.open("POST", "addNewCategoryProcess.php", true);
     request.send(form);
 
 }
 
-function saveCategory(){
+function saveCategory() {
     var txt = document.getElementById("txt").value;
 
     var form = new FormData();
-    form.append("t",txt);
-    form.append("e",e);
-    form.append("n",n);
+    form.append("t", txt);
+    form.append("e", e);
+    form.append("n", n);
 
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function (){
-        if(request.status == 200 & request.readyState == 4){
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
             var response = request.responseText;
-            if(response == "success"){
+            if (response == "success") {
                 vc.hide();
                 window.location.reload();
-            }else{
-                alert (response);
+            } else {
+                alert(response);
             }
-            
+
         }
     }
 
-    request.open("POST","saveCategoryProcess.php",true);
+    request.open("POST", "saveCategoryProcess.php", true);
     request.send(form);
+}
+
+function sendAdminMsg(email) {
+    var txt = document.getElementById("msgtxt");
+
+    var form = new FormData();
+    form.append("t", txt.value);
+    form.append("e", email);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            alert(response);
+        }
+    }
+
+    request.open("POST", "sendAdminMsgProcess.php", true);
+    request.send(form);
+
+}
+
+var cam;
+function contactAdmin() {
+    var m = document.getElementById("contactAdmin");
+    cam = new bootstrap.Modal(m);
+    cam.show();
+}
+
+function sendAdminMsg() {
+    var txt = document.getElementById("msgtxt");
+
+    var form = new FormData();
+    form.append("t", txt.value);
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            alert(response);
+        }
+    }
+
+    request.open("POST", "sendAdminMsgProcess.php", true);
+    request.send(form);
+
+}
+
+function searchInvoice() {
+    var txt = document.getElementById("searchtxt").value;
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            document.getElementById("viewArea").innerHTML = response;
+        }
+    }
+
+    request.open("GET", "searchInvoiceProcess.php?id=" + txt, true);
+    request.send();
+}
+
+function findsellings() {
+
+    var from = document.getElementById("from").value;
+    var to = document.getElementById("to").value;
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            document.getElementById("viewArea").innerHTML = response;
+        }
+    }
+
+    request.open("GET", "findSellingsProcess.php?f=" + from + "&t=" + to, true);
+    request.send();
+
+}
+
+function changeInvoiceStatus(id) {
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if (request.status == 200 & request.readyState == 4) {
+            var response = request.responseText;
+            if (response == "success") {
+                window.location.reload();
+            } else {
+                alert(response);
+            }
+        }
+    }
+
+    request.open("GET", "changeInvoiceStatusProcess.php?id=" + id, true);
+    request.send();
+
 }
